@@ -15,6 +15,7 @@
  */
 package com.example.android.viewpager;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -24,27 +25,36 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    public SimpleFragmentPagerAdapter(FragmentManager fm) {
+    final int PAGE_COUNT = 3;
+    private String tabTitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
+    private Context mContext;
+
+    public SimpleFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
+        mContext = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            return new MondayFragment();
-        } else if (position == 1) {
-            return new TuesdayFragment();
-        } else if (position == 2) {
-            return new WednesdayFragment();
-        } else if (position == 3) {
-            return new ThursdayFragment();
-        } else {
-            return new FridayFragment();
+        switch (position) {
+            case 0:
+                return new MondayFragment();
+            case 1:
+                return new TuesdayFragment();
+            case 2:
+                return new WednesdayFragment();
+            default:
+                return null;
         }
     }
 
     @Override
+    public CharSequence getPageTitle(int position) {
+       return tabTitles[position];
+    }
+
+    @Override
     public int getCount() {
-        return 5;
+        return PAGE_COUNT;
     }
 }
